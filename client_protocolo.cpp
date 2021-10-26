@@ -41,12 +41,15 @@ void agregarLargoYPalabraExtra(char* mensaje, const std::string palabra, int& la
     agregarPalabra(mensaje, largo_mensaje, palabra, largo_mensaje);
 }
 
-void ProtocoloCliente::comunicarMensajes(std::array<std::string, MAX_PALABRAS>& tokens) {
+void ProtocoloCliente::comunicarMensaje(std::array<std::string, MAX_PALABRAS>& tokens,
+                                        Intermediario& intermediario, Servidor& servidor) {
     char mensaje[MAX_MENSAJE];
     int largo_mensaje = 0;
     agregarLetraLargoPalabraYPalabra(mensaje, this->map, tokens[0], tokens[1], largo_mensaje);
     if (tokens[0] == "push")
         agregarLargoYPalabraExtra(mensaje, tokens[2], largo_mensaje);
+    intermediario.aniadirMensaje(mensaje, largo_mensaje);
+    servidor.notificarMensaje(intermediario);
 }
 
 void ProtocoloCliente::recibirMensaje() {
