@@ -1,9 +1,9 @@
 #include "client_server_colas_thread_safe.h"
 
-ListaDeColasThreadSafe::ListaDeColasThreadSafe() {}
+MapaDeColasThreadSafe::MapaDeColasThreadSafe() {}
 
 
-ListaDeColasThreadSafe::~ListaDeColasThreadSafe() {
+MapaDeColasThreadSafe::~MapaDeColasThreadSafe() {
 
 }
 

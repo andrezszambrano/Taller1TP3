@@ -8,7 +8,7 @@
 class Servidor {
 private:
     ProtocoloServidor protocolo;
-    ListaDeColasThreadSafe lista_colas;
+    MapaDeColasThreadSafe mapa_colas;
 
 public:
     Servidor();

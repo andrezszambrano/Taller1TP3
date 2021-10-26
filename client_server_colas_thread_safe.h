@@ -2,7 +2,7 @@
 #define TP3FINAL_CLIENT_SERVER_COLAS_THREAD_SAFE_H
 
 #include <queue>
-#include <list>
+#include <map>
 #include <string>
 
 class ThreadSafeQueue {
@@ -18,13 +18,13 @@ public:
     ~ThreadSafeQueue();
 };
 
-class ListaDeColasThreadSafe {
+class MapaDeColasThreadSafe {
 private:
-    std::list<ThreadSafeQueue> colas;
+    std::map<char, ThreadSafeQueue> colas;
 
 public:
-    ListaDeColasThreadSafe();
-    ~ListaDeColasThreadSafe();
+    MapaDeColasThreadSafe();
+    ~MapaDeColasThreadSafe();
 };
 
 
