@@ -14,10 +14,10 @@ void Servidor::notificarMensaje(Intermediario& intermediario) {
     if (info.accion == 'd') {
         this->mapa_colas.definir(info.nombre_cola);
     } else if (info.accion == 'u') {
-        //this->mapa_colas.pushearEnCola(info.nombre_cola, info.mensaje_adicional);
+        this->mapa_colas.pushearEnCola(info.nombre_cola, std::move(info.mensaje_adicional));
     } else if (info.accion == 'o') {
         std::string str_aux;
-        //this->mapa_colas.popCola(info.nombre_cola, str_aux);
+        this->mapa_colas.popDeLaCola(info.nombre_cola, str_aux);
 
         //intermediario.aniadirMensaje();
     }

@@ -13,13 +13,16 @@ class ThreadSafeQueue {
 public:
     ThreadSafeQueue();
 
-    void push(std::string&& mensaje);
+    void push(std::string&& mensaje, int id_cliente);
 
-    void pop(std::string& mensaje);
+    void pop(std::string& mensaje, int id_cliente);
 
     void aniadirId(int id_cliente);
 
     ~ThreadSafeQueue();
+
+private:
+    bool idSeEncuentraEnListaDeIds(int id_cliente);
 };
 
 class MapaDeColasThreadSafe {
@@ -28,7 +31,9 @@ private:
 
 public:
     MapaDeColasThreadSafe();
-    void definir(std::string identificador);
+    void definir(const std::string identificador);
+    void pushearEnCola(const std::string identificador, std::string&& mensaje);
+    void popDeLaCola(const std::string identificador, std::string& mensaje);
     ~MapaDeColasThreadSafe();
 };
 
