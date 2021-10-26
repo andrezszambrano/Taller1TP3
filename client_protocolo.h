@@ -5,18 +5,17 @@
 #include <array>
 #include <map>
 #include "client_intermediario.h"
-#include "client_server.h"
+#include "server_clase.h"
 #define MAX_PALABRAS 3
 
 class ProtocoloCliente {
 private:
     std::map<std::string, char> map;
-    Intermediario intermediario;
+
 public:
     ProtocoloCliente();
-    void comunicarMensaje(std::array<std::string, MAX_PALABRAS>& tokens,
-                          Intermediario& intermediario, Servidor& servidor);
-    void recibirMensaje(std::string& mensaje, Intermediario& intermediario);
+    void comunicarMensaje(Socket& socket, std::array<std::string, MAX_PALABRAS>& tokens);
+    std::string recibirMensaje(Socket& socket);
     ~ProtocoloCliente();
 };
 

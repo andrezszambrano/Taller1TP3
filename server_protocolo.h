@@ -3,7 +3,7 @@
 
 #include "client_intermediario.h"
 #include <string>
-
+#include "common_socket.h"
 class MensajeProtocolo {
 public:
     char accion;
@@ -20,7 +20,8 @@ private:
 
 public:
     ProtocoloServidor() = default;
-    void recibirMensaje(MensajeProtocolo& info, Intermediario& intermediario);
+    void recibirMensaje(Socket& socket, MensajeProtocolo& info);
+    void enviarMensaje(Socket& socket, const char* mensaje, int length);
     ~ProtocoloServidor() = default;
 
 };

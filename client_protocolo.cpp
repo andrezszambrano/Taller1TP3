@@ -41,26 +41,45 @@ void agregarLargoYPalabraExtra(char* mensaje, const std::string palabra, int& es
     agregarPalabra(mensaje, palabra, escritos);
 }
 
-void ProtocoloCliente::comunicarMensaje(std::array<std::string, MAX_PALABRAS>& tokens,
-                                        Intermediario& intermediario, Servidor& servidor) {
+void ProtocoloCliente::comunicarMensaje(Socket& socket,
+                                        std::array<std::string, MAX_PALABRAS>& tokens) {
     char mensaje[MAX_MENSAJE];
     int escritos = 0;
     agregarLetraLargoPalabraYPalabra(mensaje, this->map, tokens[0], tokens[1], escritos);
     if (tokens[0] == "push")
         agregarLargoYPalabraExtra(mensaje, tokens[2], escritos);
-    intermediario.aniadirMensaje(mensaje, escritos);
-    servidor.notificarMensaje(intermediario);
+    socket.enviarMensaje(mensaje, escritos);
 }
 
-void ProtocoloCliente::recibirMensaje(std::string& mensaje, Intermediario& intermediario) {
-    char mensaje_aux[MAX_MENSAJE];
-    int largo = intermediario.recibirMensaje(mensaje_aux);
-    //if ((int)mensaje.size() < largo)
-      //  mensaje.reserve(largo);
-    mensaje.append(mensaje_aux, largo) ;
-    //if(largo>100){}
+uint16_t recibirLargoDePalabra(Socket& socket, int& leidos) {
+    char buf[2];
+    int aux = socket.recibirMensaje(buf, sizeof(uint16_t));
+    uint16_t largoBE;
+    memcpy(&largoBE, buf, sizeof(uint16_t));
+    leidos = leidos + aux;
+    return ntohs(largoBE);
+}
 
-      //mensaje.assign(mensaje, largo);
+void recibirPalabra(Socket& socket, char* buf, uint16_t largo_palabra, int& leidos) {
+    int aux = socket.recibirMensaje(buf, largo_palabra);
+    leidos = leidos + aux;
+}
+
+uint16_t recibirLargoDePalabraYPalabra(Socket& socket, char* buf, int& leidos) {
+    uint16_t largo_palabra = recibirLargoDePalabra(socket, leidos);
+    recibirPalabra(socket, buf, largo_palabra,leidos);
+    return largo_palabra;
+}
+
+std::string ProtocoloCliente::recibirMensaje(Socket& socket) {
+    int leidos = 0;
+    char mensaje_aux[MAX_MENSAJE];
+    memset(mensaje_aux, 0, MAX_MENSAJE*sizeof(char));
+    recibirLargoDePalabraYPalabra(socket, mensaje_aux, leidos);
+    std::string str_aux(mensaje_aux);
+    return str_aux;
+  //  mensaje.resize(largo + 1);
+    //mensaje.assign(mensaje_aux, largo);
 }
 
 ProtocoloCliente::~ProtocoloCliente() {

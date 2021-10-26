@@ -2,26 +2,24 @@
 #define TP3FINAL_CLIENTE_H
 
 #include "client_protocolo.h"
-#include "client_server.h"
-
+#include "common_socket.h"
 class Cliente {
 private:
+    Socket socket_cliente;
     ProtocoloCliente protocolo;
-    Servidor servidor;
     bool cliente_activo;
     bool esperando_mensaje;
 
 public:
     Cliente();
-    Cliente(int host, int servidor);
+    Cliente(const char* host, const char* servidor);
     void ejecutar();
-    void leerDeEntradaEstandarYRealizarAccionCorrespondiente(Intermediario& intermediario);
-    void recibirRespuesta(Intermediario& intermediario);
+    void leerDeEntradaEstandarYRealizarAccionCorrespondiente();
+    void recibirRespuesta();
     ~Cliente();
 
 private:
-    void realizarAccionCorrespondiente(std::array<std::string, MAX_PALABRAS>& tokens,
-                                        Intermediario& intermediario);
+    void realizarAccionCorrespondiente(std::array<std::string, MAX_PALABRAS>& tokens);
 };
 
 

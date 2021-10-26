@@ -8,7 +8,14 @@
 int main(int argc, char* argv[]) {
     //int host = atoi(argv[1]);
     //int servidor = atoi(argv[2]);
-    Cliente cliente(0, 0);
-    cliente.ejecutar();
+    try {
+        Cliente cliente(argv[1], argv[2]);
+        cliente.ejecutar();
+    } catch (const std::runtime_error& error) {
+        std::cerr << error.what() << std::endl;
+        return ERROR_EXTERNO;
+    } catch (...) {
+        return ERROR_EXTERNO;
+    }
     return EXITO;
 }
