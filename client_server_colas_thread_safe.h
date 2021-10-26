@@ -4,9 +4,11 @@
 #include <queue>
 #include <map>
 #include <string>
+#include <list>
 
 class ThreadSafeQueue {
     std::queue<std::string> cola;
+    std::list<int> ids_clientes;
 
 public:
     ThreadSafeQueue();
@@ -15,15 +17,18 @@ public:
 
     void pop(std::string& mensaje);
 
+    void aniadirId(int id_cliente);
+
     ~ThreadSafeQueue();
 };
 
 class MapaDeColasThreadSafe {
 private:
-    std::map<char, ThreadSafeQueue> colas;
+    std::map<std::string, ThreadSafeQueue> colas;
 
 public:
     MapaDeColasThreadSafe();
+    void definir(std::string identificador);
     ~MapaDeColasThreadSafe();
 };
 
