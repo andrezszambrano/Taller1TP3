@@ -52,8 +52,15 @@ void ProtocoloCliente::comunicarMensaje(std::array<std::string, MAX_PALABRAS>& t
     servidor.notificarMensaje(intermediario);
 }
 
-void ProtocoloCliente::recibirMensaje() {
+void ProtocoloCliente::recibirMensaje(std::string& mensaje, Intermediario& intermediario) {
+    char mensaje_aux[MAX_MENSAJE];
+    int largo = intermediario.recibirMensaje(mensaje_aux);
+    //if ((int)mensaje.size() < largo)
+      //  mensaje.reserve(largo);
+    mensaje.append(mensaje_aux, largo) ;
+    //if(largo>100){}
 
+      //mensaje.assign(mensaje, largo);
 }
 
 ProtocoloCliente::~ProtocoloCliente() {

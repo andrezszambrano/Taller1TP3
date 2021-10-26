@@ -16,7 +16,7 @@ public:
     ProtocoloCliente();
     void comunicarMensaje(std::array<std::string, MAX_PALABRAS>& tokens,
                           Intermediario& intermediario, Servidor& servidor);
-    void recibirMensaje();
+    void recibirMensaje(std::string& mensaje, Intermediario& intermediario);
     ~ProtocoloCliente();
 };
 

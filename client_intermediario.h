@@ -11,7 +11,7 @@ private:
 public:
     Intermediario() = default;
     void aniadirMensaje(const char* mensaje, int largo_mensaje);
-    void recibirMensaje(char* buf);
+    int recibirMensaje(char* buf);
     ~Intermediario() = default;
 };
 

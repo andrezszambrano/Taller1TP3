@@ -32,13 +32,15 @@ void leerDeEntradaEstandar(std::array<std::string, MAX_PALABRAS>& tokens) {
 
 void Cliente::realizarAccionCorrespondiente(std::array<std::string, MAX_PALABRAS>& tokens,
                                             Intermediario& intermediario) {
-    if (tokens[0] == "exit") {
+
+    if (tokens[0] == "exit")
         this->cliente_activo = false;
-    } else {
+    else
         this->protocolo.comunicarMensaje(tokens, intermediario, this->servidor);
-        if (tokens[0] == "pop")
-            this->esperando_mensaje = true;
-    }
+    if (tokens[0] == "pop")
+        this->esperando_mensaje = true;
+    else
+        this->esperando_mensaje = false;
 }
 
 void Cliente::leerDeEntradaEstandarYRealizarAccionCorrespondiente(Intermediario& intermediario) {
@@ -49,8 +51,11 @@ void Cliente::leerDeEntradaEstandarYRealizarAccionCorrespondiente(Intermediario&
 
 
 void Cliente::recibirRespuesta(Intermediario& intermediario) {
-    if (this->esperando_mensaje)
-        this->protocolo.recibirMensaje();
+    if (this->esperando_mensaje){
+        std::string mensaje;
+        this->protocolo.recibirMensaje(mensaje, intermediario);
+        std::cout << mensaje << std::endl;
+    }
 }
 
 void Cliente::ejecutar() {
