@@ -54,7 +54,8 @@ void Cliente::leerDeEntradaEstandarYRealizarAccionCorrespondiente() {
 
 void Cliente::recibirRespuesta() {
     if (this->esperando_mensaje){
-        std::string mensaje = this->protocolo.recibirMensaje(this->socket_cliente);
+        std::string mensaje;
+        this->protocolo.recibirMensaje(this->socket_cliente, mensaje);
         std::cout << mensaje << std::endl;
     }
 }

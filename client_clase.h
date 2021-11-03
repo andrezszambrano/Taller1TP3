@@ -14,11 +14,11 @@ public:
     Cliente();
     Cliente(const char* host, const char* servidor);
     void ejecutar();
-    void leerDeEntradaEstandarYRealizarAccionCorrespondiente();
-    void recibirRespuesta();
     ~Cliente();
 
 private:
+    void leerDeEntradaEstandarYRealizarAccionCorrespondiente();
+    void recibirRespuesta();
     void realizarAccionCorrespondiente(std::array<std::string, MAX_PALABRAS>& tokens);
 };
 

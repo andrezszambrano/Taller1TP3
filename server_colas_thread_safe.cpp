@@ -4,7 +4,7 @@
 
 MapaDeColasThreadSafe::MapaDeColasThreadSafe() {}
 
-void MapaDeColasThreadSafe::definir(const std::string identificador) {
+void MapaDeColasThreadSafe::definir(const std::string& identificador) {
     bool hay_cola_con_identificador = this->colas.count(identificador);
     if (!hay_cola_con_identificador)
         this->colas.emplace(identificador, std::move(ThreadSafeQueue()));
@@ -12,14 +12,14 @@ void MapaDeColasThreadSafe::definir(const std::string identificador) {
     //Añado id de cliente (si es que no hay ya)
 }
 
-void MapaDeColasThreadSafe::pushearEnCola(const std::string identificador, std::string&& mensaje) {
+void MapaDeColasThreadSafe::pushearEnCola(const std::string& identificador, std::string&& mensaje) {
     bool hay_cola_con_identificador = this->colas.count(identificador);
     if (!hay_cola_con_identificador)
         return;
     this->colas[identificador].push(std::move(mensaje), 0);
 }
 
-void MapaDeColasThreadSafe::popDeLaCola(const std::string identificador, std::string& mensaje) {
+void MapaDeColasThreadSafe::popDeLaCola(const std::string& identificador, std::string& mensaje) {
     bool hay_cola_con_identificador = this->colas.count(identificador);
     if (!hay_cola_con_identificador)
         return;

@@ -79,6 +79,6 @@ void ProtocoloServidor::enviarMensaje(Socket& socket, const char* mensaje, int l
     uint16_t largoBE = htons(largo);
     char buf[2];
     memcpy(buf, &largoBE, sizeof(uint16_t));
-    socket.enviarMensaje(buf, length);
+    socket.enviarMensaje(buf, sizeof(uint16_t));
     socket.enviarMensaje(mensaje, length);
 }

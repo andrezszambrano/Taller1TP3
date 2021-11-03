@@ -28,7 +28,6 @@ void Socket::inicializarYConectarCliente(const char* host, const char* servicio)
     baseaddr.ai_socktype = SOCK_STREAM;
     baseaddr.ai_family = AF_UNSPEC; //Ipv4 o Ipv6
     baseaddr.ai_flags = 0; //Ningún flag ya que es un cliente
-
     int aux = getaddrinfo(host, servicio, &baseaddr, &ptraddr);
     if (aux != EXITO){
         fprintf(stderr, "Error: %s\n", gai_strerror(aux));

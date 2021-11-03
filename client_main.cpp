@@ -6,8 +6,6 @@
 
 
 int main(int argc, char* argv[]) {
-    //int host = atoi(argv[1]);
-    //int servidor = atoi(argv[2]);
     try {
         Cliente cliente(argv[1], argv[2]);
         cliente.ejecutar();

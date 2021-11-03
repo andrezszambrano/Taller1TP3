@@ -31,9 +31,9 @@ private:
 
 public:
     MapaDeColasThreadSafe();
-    void definir(const std::string identificador);
-    void pushearEnCola(const std::string identificador, std::string&& mensaje);
-    void popDeLaCola(const std::string identificador, std::string& mensaje);
+    void definir(const std::string& identificador);
+    void pushearEnCola(const std::string& identificador, std::string&& mensaje);
+    void popDeLaCola(const std::string& identificador, std::string& mensaje);
     ~MapaDeColasThreadSafe();
 };
 

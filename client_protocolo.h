@@ -14,8 +14,8 @@ private:
 
 public:
     ProtocoloCliente();
-    void comunicarMensaje(Socket& socket, std::array<std::string, MAX_PALABRAS>& tokens);
-    std::string recibirMensaje(Socket& socket);
+    void comunicarMensaje(Socket& socket, const std::array<std::string, MAX_PALABRAS>& tokens);
+    void recibirMensaje(Socket& socket, std::string& palabra);
     ~ProtocoloCliente();
 };
 
