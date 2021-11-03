@@ -66,12 +66,13 @@ void recibirYAgregarMensajeAdicional(Socket& socket, MensajeProtocolo& info, int
     info.mensaje_adicional.assign(str_aux, largo);
 }
 
-void ProtocoloServidor::recibirMensaje(Socket& socket, MensajeProtocolo& info) {
+int ProtocoloServidor::recibirMensaje(Socket& socket, MensajeProtocolo& info) {
     int leidos = 0;
     recibirCaracterYCargarAccion(socket, info, leidos);
     recibirYAgregarIdentificador(socket, info, leidos);
     if (info.accion == 'u')
         recibirYAgregarMensajeAdicional(socket, info, leidos);
+    return leidos;
 }
 
 void ProtocoloServidor::enviarMensaje(Socket& socket, const char* mensaje, int length) {

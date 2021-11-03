@@ -1,6 +1,9 @@
 #include "server_clase.h"
 
+#include <iostream>
 #define MAX_PALABRA 50
+#define EXITO 0
+#define SOCKET_NO_DISPONIBLE -1
 
 Servidor::Servidor(const char* servicio)
         :socket_aceptador(), protocolo(), mapa_colas() {
@@ -10,14 +13,17 @@ Servidor::Servidor(const char* servicio)
 void Servidor::ejecutar() {
     Socket socket_cliente;
     this->socket_aceptador.aceptarSocket(socket_cliente);
-    recibirMensajeYRealizarAccion(socket_cliente);
-    recibirMensajeYRealizarAccion(socket_cliente);
-    recibirMensajeYRealizarAccion(socket_cliente);
+    int aux = EXITO;
+    while (aux != SOCKET_NO_DISPONIBLE)
+        aux = recibirMensajeYRealizarAccion(socket_cliente);
+    std::cout << "Cerraron el socket!" <<std::endl;
 }
 
-void Servidor::recibirMensajeYRealizarAccion(Socket& socket_cliente) {
+int Servidor::recibirMensajeYRealizarAccion(Socket& socket_cliente) {
     MensajeProtocolo info;
-    this->protocolo.recibirMensaje(socket_cliente, info);
+    int leidos = this->protocolo.recibirMensaje(socket_cliente, info);
+    if (leidos == 0) //Cerraron el socket
+        return SOCKET_NO_DISPONIBLE;
     if (info.accion == 'd') {
         this->mapa_colas.definir(info.nombre_cola);
     } else if (info.accion == 'u') {
@@ -27,6 +33,6 @@ void Servidor::recibirMensajeYRealizarAccion(Socket& socket_cliente) {
         this->mapa_colas.popDeLaCola(info.nombre_cola, str_aux);
         const char* mensaje = str_aux.c_str();
         this->protocolo.enviarMensaje(socket_cliente, mensaje, str_aux.size());
-        //socket_cliente.enviarMensaje(mensaje, str_aux.size());
     }
+    return EXITO;
 }

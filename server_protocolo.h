@@ -20,7 +20,7 @@ private:
 
 public:
     ProtocoloServidor() = default;
-    void recibirMensaje(Socket& socket, MensajeProtocolo& info);
+    int recibirMensaje(Socket& socket, MensajeProtocolo& info);
     void enviarMensaje(Socket& socket, const char* mensaje, int length);
     ~ProtocoloServidor() = default;
 

@@ -16,7 +16,7 @@ public:
     Servidor() = default;
     Servidor(const char* servicio);
     void ejecutar();
-    void recibirMensajeYRealizarAccion(Socket& socket_cliente);
+    int recibirMensajeYRealizarAccion(Socket& socket_cliente);
     ~Servidor() = default;
 };
 

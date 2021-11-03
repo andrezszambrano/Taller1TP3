@@ -134,13 +134,10 @@ int Socket::aceptarSocket(Socket& socket_cliente) {
 
 ssize_t Socket::enviarMensaje(const char* buffer, size_t length) {
     size_t escritos = 0;
-    if (this->fd == SIN_FD){
+    if (this->fd == SIN_FD)
         throw std::runtime_error("Error: un socket que no fue inicializado no puede enviar "
                                  "mensajes.");
-        return escritos;
-    }
-
-    while (escritos < length){
+    while (escritos < length) {
         int aux = send(this->fd, buffer + escritos,
                        length - escritos, MSG_NOSIGNAL);
         if (aux == ERROR)
