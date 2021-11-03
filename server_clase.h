@@ -5,6 +5,19 @@
 #include "server_protocolo.h"
 #include "server_colas_thread_safe.h"
 #include "common_socket.h"
+#include <mutex>
+
+class IntProtegido {
+private:
+    int num;
+    std::mutex mutex;
+
+public:
+    IntProtegido();
+    void setNum(int num);
+    int getNum();
+    ~IntProtegido();
+};
 
 class Servidor {
 private:
@@ -18,6 +31,10 @@ public:
     void ejecutar();
     int recibirMensajeYRealizarAccion(Socket& socket_cliente);
     ~Servidor() = default;
+
+private:
+    void ejecutarCliente(Socket& socket_cliente);
+    void ejecutarHiloAceptador(IntProtegido& num);
 };
 
 #endif //TP3FINAL_SERVER_CLASE_H
