@@ -29,11 +29,9 @@ public:
     Servidor() = default;
     Servidor(const char* servicio);
     void ejecutar();
-    int recibirMensajeYRealizarAccion(Socket& socket_cliente);
     ~Servidor() = default;
 
 private:
-    void ejecutarCliente(Socket& socket_cliente);
     void ejecutarHiloAceptador(IntProtegido& num);
 };
 

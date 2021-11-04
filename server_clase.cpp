@@ -1,10 +1,9 @@
 #include "server_clase.h"
 #include <thread>
 #include <iostream>
-
+#include "server_maneja_clientes.h"
 #define MAX_PALABRA 50
 #define EXITO 0
-#define SOCKET_NO_DISPONIBLE -1
 #define SEGUIR_ACEPTANDO 0
 #define DEJAR_DE_ACEPTAR 1
 
@@ -14,42 +13,29 @@ Servidor::Servidor(const char* servicio)
 }
 
 void Servidor::ejecutarHiloAceptador(IntProtegido& num) {
+    std::list<std::thread> hilos_clientes;
     while (num.getNum() == SEGUIR_ACEPTANDO) {
         Socket socket_cliente;
         this->socket_aceptador.aceptarSocket(socket_cliente);
-        ejecutarCliente(socket_cliente);
+        //std::thread hilo(&Servidor::ejecutarCliente, this, socket_cliente);
+        //hilos_clientes.push_back(std::move(hilo));
+        //ejecutarCliente(socket_cliente);
     }
 }
 
 void Servidor::ejecutar() {
-    IntProtegido num;
+    Socket socket_cliente;
+    this->socket_aceptador.aceptarSocket(socket_cliente);
+    ManejaCliente cliente(std::move(socket_cliente), this->protocolo, this->mapa_colas);
+    cliente.empezar();
+    cliente.join();
+    //ejecutarCliente(socket_cliente);
+    /*IntProtegido num;
     std::thread hilo_aceptador(&Servidor::ejecutarHiloAceptador, this, std::ref(num));
-    hilo_aceptador.join();
-}
-
-void Servidor::ejecutarCliente(Socket& socket_cliente) {
-    int aux = EXITO;
-    while (aux != SOCKET_NO_DISPONIBLE)
-        aux = recibirMensajeYRealizarAccion(socket_cliente);
-    std::cout << "Cerraron el socket!" <<std::endl;
-}
-
-int Servidor::recibirMensajeYRealizarAccion(Socket& socket_cliente) {
-    MensajeProtocolo info;
-    int leidos = this->protocolo.recibirMensaje(socket_cliente, info);
-    if (leidos == 0) //Cerraron el socket
-        return SOCKET_NO_DISPONIBLE;
-    if (info.accion == 'd') {
-        this->mapa_colas.definir(info.nombre_cola);
-    } else if (info.accion == 'u') {
-        this->mapa_colas.pushearEnCola(info.nombre_cola, std::move(info.mensaje_adicional));
-    } else if (info.accion == 'o') {
-        std::string str_aux;
-        this->mapa_colas.popDeLaCola(info.nombre_cola, str_aux);
-        const char* mensaje = str_aux.c_str();
-        this->protocolo.enviarMensaje(socket_cliente, mensaje, str_aux.size());
+    while (std::cin.get() != 'q') {
     }
-    return EXITO;
+    num.setNum(DEJAR_DE_ACEPTAR);
+    hilo_aceptador.join();*/
 }
 
 IntProtegido::IntProtegido()

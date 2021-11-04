@@ -11,6 +11,7 @@ private:
 
 public:
     Socket();
+    Socket(Socket&& otro_socket);
     void inicializarYConectarCliente(const char* host, const char* servicio);
     void inicializarServidorConBindYListen(const char* host, const char* servicio);
     int aceptarSocket(Socket& socket_cliente);

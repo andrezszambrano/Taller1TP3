@@ -20,6 +20,11 @@ Socket::Socket()
         :fd(SIN_FD) {
 }
 
+Socket::Socket(Socket&& otro_socket) {
+    this->fd = otro_socket.fd;
+    otro_socket.fd = SIN_FD;
+}
+
 void Socket::inicializarYConectarCliente(const char* host, const char* servicio) {
     struct addrinfo baseaddr;
     struct addrinfo* ptraddr;
@@ -166,8 +171,10 @@ ssize_t Socket::recibirMensaje(char* buffer, size_t length) {
 }
 
 Socket::~Socket() {
-    shutdown(this->fd, SHUT_RDWR);
-    int aux = close(this->fd);
-    if (aux != EXITO)
-        fprintf(stderr, "Error: %s\n", strerror(errno));
+    if (this->fd != SIN_FD) {
+        shutdown(this->fd, SHUT_RDWR);
+        int aux = close(this->fd);
+        if (aux != EXITO)
+            fprintf(stderr, "Error: %s\n", strerror(errno));
+    }
 }
