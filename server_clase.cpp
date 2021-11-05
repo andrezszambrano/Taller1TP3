@@ -12,30 +12,38 @@ Servidor::Servidor(const char* servicio)
     socket_aceptador.inicializarServidorConBindYListen(nullptr, servicio);
 }
 
-void Servidor::ejecutarHiloAceptador(IntProtegido& num) {
-    std::list<std::thread> hilos_clientes;
-    while (num.getNum() == SEGUIR_ACEPTANDO) {
-        Socket socket_cliente;
-        this->socket_aceptador.aceptarSocket(socket_cliente);
-        //std::thread hilo(&Servidor::ejecutarCliente, this, socket_cliente);
-        //hilos_clientes.push_back(std::move(hilo));
-        //ejecutarCliente(socket_cliente);
+void joinearHilosClientes(std::list<ManejaCliente>& hilos_clientes) {
+    std::list<ManejaCliente>::iterator it;
+    for (it = hilos_clientes.begin(); it != hilos_clientes.end(); ++it){
+        it->join();
     }
 }
 
-void Servidor::ejecutar() {
+void Servidor::agregarClienteALista(std::list<ManejaCliente>& hilos_clientes) {
     Socket socket_cliente;
     this->socket_aceptador.aceptarSocket(socket_cliente);
     ManejaCliente cliente(std::move(socket_cliente), this->protocolo, this->mapa_colas);
-    cliente.empezar();
-    cliente.join();
-    //ejecutarCliente(socket_cliente);
-    /*IntProtegido num;
+    hilos_clientes.push_back(std::move(cliente));
+}
+
+void Servidor::ejecutarHiloAceptador(IntProtegido& num) {
+    std::list<ManejaCliente> hilos_clientes;
+    std::list<ManejaCliente>::iterator it = hilos_clientes.begin(); //Lista vacía al principio
+    while (num.getNum() == SEGUIR_ACEPTANDO) {
+        this->agregarClienteALista(hilos_clientes);
+        it++; //Pasamos a apuntar al nuevo elemento
+        it->empezar();
+    }
+    joinearHilosClientes(hilos_clientes);
+}
+
+void Servidor::ejecutar() {
+    IntProtegido num;
     std::thread hilo_aceptador(&Servidor::ejecutarHiloAceptador, this, std::ref(num));
     while (std::cin.get() != 'q') {
     }
     num.setNum(DEJAR_DE_ACEPTAR);
-    hilo_aceptador.join();*/
+    hilo_aceptador.join();
 }
 
 IntProtegido::IntProtegido()

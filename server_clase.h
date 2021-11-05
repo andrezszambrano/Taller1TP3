@@ -6,6 +6,8 @@
 #include "server_colas_thread_safe.h"
 #include "common_socket.h"
 #include <mutex>
+#include <list>
+#include "server_maneja_clientes.h"
 
 class IntProtegido {
 private:
@@ -33,6 +35,7 @@ public:
 
 private:
     void ejecutarHiloAceptador(IntProtegido& num);
+    void agregarClienteALista(std::list<ManejaCliente>& hilos_clientes);
 };
 
 #endif //TP3FINAL_SERVER_CLASE_H

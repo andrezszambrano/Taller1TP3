@@ -6,32 +6,24 @@
 #include "common_socket.h"
 #include <thread>
 
-class Thread {
+class ManejaCliente {
 private:
-    std::thread hilo;
-
-public:
-    Thread();
-    void empezar();
-    void ejecutarAgarraExcepciones();
-    virtual void ejecutar() = 0;
-    void join();
-    ~Thread();
-};
-
-class ManejaCliente: public Thread {
-private:
+        std::thread hilo;
         Socket socket_cliente;
         ProtocoloServidor protocolo;
-        MapaDeColasThreadSafe mapa_colas;
+        MapaDeColasThreadSafe& mapa_colas;
 
 public:
     ManejaCliente() = delete;
+    ManejaCliente(ManejaCliente&& otroCliente);
     ManejaCliente(Socket&& socket, ProtocoloServidor& protocolo, MapaDeColasThreadSafe& mapa);
-    void ejecutar();
+    void empezar();
+    void join();
     ~ManejaCliente();
 
 private:
+    void ejecutarAgarraExcepciones();
+    void ejecutar();
     int recibirMensajeYRealizarAccion();
 };
 
