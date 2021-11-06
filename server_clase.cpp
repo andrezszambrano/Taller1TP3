@@ -37,13 +37,30 @@ void Servidor::ejecutarHiloAceptador(IntProtegido& num) {
     joinearHilosClientes(hilos_clientes);
 }
 
-void Servidor::ejecutar() {
+void Servidor::ejecutarSoloHiloMain() {
+    for (int i = 0; i < 10; i++) {
+        Socket socket_cliente;
+        this->socket_aceptador.aceptarSocket(socket_cliente);
+        ManejaCliente cliente(std::move(socket_cliente), this->protocolo, this->mapa_colas);
+        cliente.ejecutar();
+    }
+}
+
+void Servidor::ejecutarConHilos() {
     IntProtegido num;
     std::thread hilo_aceptador(&Servidor::ejecutarHiloAceptador, this, std::ref(num));
     while (std::cin.get() != 'q') {
     }
     num.setNum(DEJAR_DE_ACEPTAR);
     hilo_aceptador.join();
+}
+
+void Servidor::ejecutar(bool cero_hilos) {
+    if (cero_hilos)
+        ejecutarSoloHiloMain();
+    else
+        ejecutarConHilos();
+
 }
 
 IntProtegido::IntProtegido()

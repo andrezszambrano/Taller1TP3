@@ -30,10 +30,12 @@ private:
 public:
     Servidor() = default;
     Servidor(const char* servicio);
-    void ejecutar();
+    void ejecutar(bool cero_hilos);
     ~Servidor() = default;
 
 private:
+    void ejecutarSoloHiloMain();
+    void ejecutarConHilos();
     void ejecutarHiloAceptador(IntProtegido& num);
     void agregarClienteALista(std::list<ManejaCliente>& hilos_clientes);
 };

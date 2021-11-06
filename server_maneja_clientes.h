@@ -18,12 +18,12 @@ public:
     ManejaCliente(ManejaCliente&& otroCliente);
     ManejaCliente(Socket&& socket, ProtocoloServidor& protocolo, MapaDeColasThreadSafe& mapa);
     void empezar();
+    void ejecutar();
     void join();
     ~ManejaCliente();
 
 private:
     void ejecutarAgarraExcepciones();
-    void ejecutar();
     int recibirMensajeYRealizarAccion();
 };
 
