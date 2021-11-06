@@ -20,6 +20,10 @@ Socket::Socket()
         :fd(SIN_FD) {
 }
 
+Socket::Socket(int fd_valido)
+        :fd(fd_valido) {
+}
+
 Socket::Socket(Socket&& otro_socket) {
     this->fd = otro_socket.fd;
     otro_socket.fd = SIN_FD;
@@ -123,18 +127,19 @@ void Socket::inicializarServidorConBindYListen(const char* host, const char* ser
     this->fd = fdServidor;
 }
 
-void Socket::aniadirFileDescriptorValido(int fd) {
-    this->fd = fd;
+bool Socket::esValido() {
+    return (this->fd != SIN_FD);
 }
 
-int Socket::aceptarSocket(Socket& socket_cliente) {
+Socket Socket::aceptarSocket() {
     int fd = accept(this->fd, nullptr, nullptr);
     if (fd == ERROR){
-        fprintf(stderr, "Error: %s\n", strerror(errno));
-        return ERROR;
+        //fprintf(stderr, "Error: %s\n", strerror(errno));
+        Socket socket_cliente;
+        return socket_cliente;
     }
-    socket_cliente.aniadirFileDescriptorValido(fd);
-    return EXITO;
+    Socket socket_cliente(fd);
+    return socket_cliente;
 }
 
 ssize_t Socket::enviarMensaje(const char* buffer, size_t length) {
@@ -170,11 +175,20 @@ ssize_t Socket::recibirMensaje(char* buffer, size_t length) {
     return leidos;
 }
 
+void Socket::shutdownYCerrar() {
+    shutdown(this->fd, SHUT_RDWR);
+    int aux = close(this->fd);
+    if (aux != EXITO)
+        fprintf(stderr, "Error: %s\n", strerror(errno));
+}
+
+void Socket::dejarDeAceptar() {
+    if (this->fd != SIN_FD)
+        this->shutdownYCerrar();
+    this->fd = SIN_FD;
+}
+
 Socket::~Socket() {
-    if (this->fd != SIN_FD) {
-        shutdown(this->fd, SHUT_RDWR);
-        int aux = close(this->fd);
-        if (aux != EXITO)
-            fprintf(stderr, "Error: %s\n", strerror(errno));
-    }
+    if (this->fd != SIN_FD)
+        this->shutdownYCerrar();
 }

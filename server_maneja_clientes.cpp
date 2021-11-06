@@ -33,6 +33,10 @@ void ManejaCliente::ejecutar() {
    // std::cout << "Cerraron el socket!" <<std::endl;
 }
 
+bool ManejaCliente::socketEsValido() {
+    return this->socket_cliente.esValido();
+}
+
 void ManejaCliente::join() {
     this->hilo.join();
 }

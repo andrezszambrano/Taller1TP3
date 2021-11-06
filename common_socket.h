@@ -14,13 +14,16 @@ public:
     Socket(Socket&& otro_socket);
     void inicializarYConectarCliente(const char* host, const char* servicio);
     void inicializarServidorConBindYListen(const char* host, const char* servicio);
-    int aceptarSocket(Socket& socket_cliente);
+    Socket aceptarSocket();
+    bool esValido();
+    void dejarDeAceptar();
     ssize_t enviarMensaje(const char* buffer, size_t length);
     ssize_t recibirMensaje(char* buffer, size_t length);
     ~Socket();
 
 private:
-    void aniadirFileDescriptorValido(int fd);
+    Socket(int fd_valido);
+    void shutdownYCerrar();
 };
 
 
