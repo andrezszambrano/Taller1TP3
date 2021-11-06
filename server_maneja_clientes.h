@@ -18,7 +18,6 @@ public:
     ManejaCliente(ManejaCliente&& otroCliente);
     ManejaCliente(Socket&& socket, ProtocoloServidor& protocolo, MapaDeColasThreadSafe& mapa);
     void empezar();
-    bool socketEsValido();
     void ejecutar();
     void join();
     ~ManejaCliente();

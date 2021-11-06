@@ -6,6 +6,7 @@
 
 #define MAX_PALABRA 50
 #define EXITO 0
+#define ERROR -1
 #define SEGUIR_ACEPTANDO 0
 #define DEJAR_DE_ACEPTAR 1
 #define MAX_CLIENTES_CERO_HILOS 10
@@ -21,10 +22,13 @@ void joinearHilosClientes(std::list<ManejaCliente>& hilos_clientes) {
     }
 }
 
-void Servidor::agregarClienteALista(std::list<ManejaCliente>& hilos_clientes) {
+int Servidor::agregarClienteALista(std::list<ManejaCliente>& hilos_clientes) {
     Socket socket_cliente = this->socket_aceptador.aceptarSocket();
+    if (!socket_cliente.esValido())
+        return ERROR;
     ManejaCliente cliente(std::move(socket_cliente), this->protocolo, this->mapa_colas);
     hilos_clientes.push_back(std::move(cliente));
+    return EXITO;
 }
 
 void Servidor::ejecutarSoloHiloMain() {
@@ -39,10 +43,12 @@ void Servidor::ejecutarHiloAceptador(IntProtegido& num) {
     std::list<ManejaCliente> hilos_clientes;
     std::list<ManejaCliente>::iterator it = hilos_clientes.begin(); //Lista vacía al principio
     while (num.getNum() == SEGUIR_ACEPTANDO) {
-        this->agregarClienteALista(hilos_clientes);
-        ++it; //Pasamos a apuntar al nuevo elemento
-        if (!it->socketEsValido())
+        int aux = this->agregarClienteALista(hilos_clientes);
+        if (aux == ERROR) {
+            joinearHilosClientes(hilos_clientes);
             return;
+        }
+        ++it; //Pasamos a apuntar al nuevo elemento
         it->empezar();
     }
     joinearHilosClientes(hilos_clientes);

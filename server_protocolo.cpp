@@ -1,18 +1,9 @@
 #include "server_protocolo.h"
 #include <cstring>
 #include <arpa/inet.h>
-#define MAX_MENSAJE 50
 
-/*
-int obtenerPalabra(const char* mensaje, char* buf, MensajeProtocolo& info, int& leidos) {
-    uint16_t largoBE;
-    memcpy(&largoBE, mensaje + leidos, sizeof(uint16_t));
-    uint16_t largo = ntohs(largoBE);
-    leidos = leidos + 2;
-    memcpy(buf, mensaje + leidos, largo);
-    leidos = leidos + largo;
-    return largo;
-}*/
+#define MAX_MENSAJE 50
+#define CERO_BYTES 0
 
 void recibirCaracterYCargarAccion(Socket& socket, MensajeProtocolo& info, int& leidos) {
     char accion;
@@ -24,6 +15,8 @@ void recibirCaracterYCargarAccion(Socket& socket, MensajeProtocolo& info, int& l
 uint16_t recibirLargoDePalabra(Socket& socket, int& leidos) {
     char buf[sizeof(uint16_t)];
     int aux = socket.recibirMensaje(buf, sizeof(uint16_t));
+    if (aux == CERO_BYTES)
+        return CERO_BYTES;
     uint16_t largoBE;
     memcpy(&largoBE, buf, sizeof(uint16_t));
     leidos = leidos + aux;

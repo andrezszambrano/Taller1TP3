@@ -37,7 +37,7 @@ private:
     void ejecutarSoloHiloMain();
     void ejecutarConHilos();
     void ejecutarHiloAceptador(IntProtegido& num);
-    void agregarClienteALista(std::list<ManejaCliente>& hilos_clientes);
+    int agregarClienteALista(std::list<ManejaCliente>& hilos_clientes);
 };
 
 #endif //TP3FINAL_SERVER_CLASE_H

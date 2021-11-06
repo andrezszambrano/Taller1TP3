@@ -22,7 +22,7 @@ public:
     ~Socket();
 
 private:
-    Socket(int fd_valido);
+    explicit Socket(int fd_valido);
     void shutdownYCerrar();
 };
 
