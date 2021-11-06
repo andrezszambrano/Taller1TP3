@@ -29,7 +29,7 @@ private:
 
 public:
     Servidor() = default;
-    Servidor(const char* servicio);
+    explicit Servidor(const char* servicio);
     void ejecutar(bool cero_hilos);
     ~Servidor() = default;
 

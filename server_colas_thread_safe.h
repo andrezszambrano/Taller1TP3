@@ -24,7 +24,6 @@ public:
     void pop(std::string& mensaje);
 
     ~ThreadSafeQueue();
-
 };
 
 class MapaDeColasThreadSafe {

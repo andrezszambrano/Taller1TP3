@@ -16,14 +16,11 @@ public:
 };
 
 class ProtocoloServidor {
-private:
-
 public:
     ProtocoloServidor() = default;
     int recibirMensaje(Socket& socket, MensajeProtocolo& info);
     void enviarMensaje(Socket& socket, const char* mensaje, int length);
     ~ProtocoloServidor() = default;
-
 };
 
 

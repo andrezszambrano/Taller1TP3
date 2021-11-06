@@ -1,6 +1,7 @@
 #include "server_clase.h"
 #include <thread>
 #include <iostream>
+#include <utility>
 #include "server_maneja_clientes.h"
 #define MAX_PALABRA 50
 #define EXITO 0
@@ -31,7 +32,7 @@ void Servidor::ejecutarHiloAceptador(IntProtegido& num) {
     std::list<ManejaCliente>::iterator it = hilos_clientes.begin(); //Lista vacía al principio
     while (num.getNum() == SEGUIR_ACEPTANDO) {
         this->agregarClienteALista(hilos_clientes);
-        it++; //Pasamos a apuntar al nuevo elemento
+        ++it; //Pasamos a apuntar al nuevo elemento
         it->empezar();
     }
     joinearHilosClientes(hilos_clientes);
@@ -60,7 +61,6 @@ void Servidor::ejecutar(bool cero_hilos) {
         ejecutarSoloHiloMain();
     else
         ejecutarConHilos();
-
 }
 
 IntProtegido::IntProtegido()

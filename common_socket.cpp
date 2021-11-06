@@ -159,7 +159,7 @@ ssize_t Socket::recibirMensaje(char* buffer, size_t length) {
     if (this->fd == SIN_FD)
         throw std::runtime_error("Error: un socket que no fue inicializado no puede recibir "
                                  "mensajes.");
-    while(leidos < length){
+    while (leidos < length) {
         int aux = recv(this->fd, buffer + leidos, length - leidos, 0);
         if (aux == ERROR)
             return ERROR;

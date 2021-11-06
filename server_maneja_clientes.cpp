@@ -1,5 +1,8 @@
 #include "server_maneja_clientes.h"
 #include <iostream>
+#include <utility>
+#include <string>
+
 #define EXITO 0
 #define SOCKET_NO_DISPONIBLE -1
 
@@ -27,7 +30,7 @@ void ManejaCliente::ejecutar() {
     int aux = EXITO;
     while (aux != SOCKET_NO_DISPONIBLE)
         aux = this->recibirMensajeYRealizarAccion();
-    std::cout << "Cerraron el socket!" <<std::endl;
+   // std::cout << "Cerraron el socket!" <<std::endl;
 }
 
 void ManejaCliente::join() {

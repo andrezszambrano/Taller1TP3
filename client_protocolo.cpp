@@ -82,6 +82,5 @@ void ProtocoloCliente::recibirMensaje(Socket& socket, std::string& palabra) {
 }
 
 ProtocoloCliente::~ProtocoloCliente() {
-
 }
 

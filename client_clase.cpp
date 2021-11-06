@@ -21,7 +21,6 @@ void cargarTokensDeEntradaEstandar(std::array<std::string, MAX_PALABRAS>& tokens
     std::string instruccion;
     std::getline(std::cin, instruccion);
     std::stringstream stream_de_instrucciones(instruccion);
-    std::string str_aux;
     for (int i = 0; i < MAX_PALABRAS; i++)
         std::getline(stream_de_instrucciones, tokens[i], ' ');
 }
@@ -34,7 +33,6 @@ void leerDeEntradaEstandar(std::array<std::string, MAX_PALABRAS>& tokens) {
 }
 
 void Cliente::realizarAccionCorrespondiente(std::array<std::string, MAX_PALABRAS>& tokens) {
-
     if (tokens[0] == "exit")
         this->cliente_activo = false;
     else
@@ -68,5 +66,4 @@ void Cliente::ejecutar() {
 }
 
 Cliente::~Cliente() {
-
 }

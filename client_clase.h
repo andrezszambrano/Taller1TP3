@@ -3,6 +3,8 @@
 
 #include "client_protocolo.h"
 #include "common_socket.h"
+#include <string>
+
 class Cliente {
 private:
     Socket socket_cliente;
