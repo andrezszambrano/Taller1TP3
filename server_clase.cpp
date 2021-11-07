@@ -10,8 +10,9 @@
 #define SEGUIR_ACEPTANDO 0
 #define DEJAR_DE_ACEPTAR 1
 #define MAX_CLIENTES_CERO_HILOS 10
-Servidor::Servidor(const char* servicio)
-        :socket_aceptador(std::move(Socket::crearSocketServidorConBindYListen(nullptr,
+
+Servidor::Servidor(const char* host, const char* servicio)
+        :socket_aceptador(std::move(Socket::crearSocketServidorConBindYListen(host,
                                                                               servicio))),
          protocolo(), mapa_colas() {
 }
@@ -40,10 +41,10 @@ void Servidor::ejecutarSoloHiloMain() {
     }
 }
 
-void Servidor::ejecutarHiloAceptador(IntProtegido& num) {
+void Servidor::ejecutarHiloAceptador() {
     std::list<ManejaCliente> hilos_clientes;
     std::list<ManejaCliente>::iterator it = hilos_clientes.begin(); //Lista vacía al principio
-    while (num.getNum() == SEGUIR_ACEPTANDO) {
+    while (true) {
         int aux = this->agregarClienteALista(hilos_clientes);
         if (aux == ERROR) {
             joinearHilosClientes(hilos_clientes);
@@ -52,16 +53,13 @@ void Servidor::ejecutarHiloAceptador(IntProtegido& num) {
         ++it; //Pasamos a apuntar al nuevo elemento
         it->empezar();
     }
-    joinearHilosClientes(hilos_clientes);
 }
 
 void Servidor::ejecutarConHilos() {
-    IntProtegido num;
-    std::thread hilo_aceptador(&Servidor::ejecutarHiloAceptador, this, std::ref(num));
+    std::thread hilo_aceptador(&Servidor::ejecutarHiloAceptador, this);
     while (std::cin.get() != 'q') {
     }
     this->socket_aceptador.dejarDeAceptar();
-    num.setNum(DEJAR_DE_ACEPTAR);
     hilo_aceptador.join();
 }
 
@@ -70,21 +68,4 @@ void Servidor::ejecutar(bool cero_hilos) {
         ejecutarSoloHiloMain();
     else
         ejecutarConHilos();
-}
-
-IntProtegido::IntProtegido()
-            :num(0) {
-}
-
-void IntProtegido::setNum(int num) {
-    const std::lock_guard<std::mutex> lock(this->mutex);
-    this->num = num;
-}
-
-int IntProtegido::getNum() {
-    const std::lock_guard<std::mutex> lock(this->mutex);
-    return num;
-}
-
-IntProtegido::~IntProtegido() {
 }

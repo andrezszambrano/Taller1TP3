@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
     if (argv[2])
         cero_hilos = atoi(argv[2]); //Desactivo hilos si argv[2] existe y != 0
     try {
-        Servidor servidor(argv[1]);
+        Servidor servidor(nullptr, argv[1]);
         servidor.ejecutar(cero_hilos);
     } catch (const std::runtime_error& error) {
         std::cerr << error.what() << std::endl;
