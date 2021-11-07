@@ -25,21 +25,22 @@ public:
     static Socket crearSocketServidorConBindYListen(const char* host, const char* servicio);
 
     //Se crea y retorna un socket cliente a partir de un socket servidor (inicializado previamente
-    //con el método de clase crearSocketServidorConBindYListen).
+    //con el método de clase crearSocketServidorConBindYListen). En caso de error en el accept, se
+    //lanza la excepción NoSePuedeAceptarSocketError, a la cual se puede consultar cuál fue el
+    //error.
     Socket aceptarSocket();
-
-    //ELIMINAR
-    bool esValido();
 
     //Se hace un shutdown y close sobre el socket servidor.
     void dejarDeAceptar();
 
     //Se envían hasta length bytes del contenido de buffer. Se retorna la cantidad de bytes
-    //escritos.
+    //escritos. Si el socket no está inicializado se lanza una excepción SocketNoInicializadoError
+    //con un mensaje descriptivo.
     ssize_t enviarMensaje(const char* buffer, size_t length);
 
     //Se reciben y almacenan en el buffer hasta length bytes. Se retornan la cantidad de bytes
-    //leídos
+    //leídos. Si el socket no está inicializado se lanza una excepción SocketNoInicializadoError
+    //con un mensaje descriptivo.
     ssize_t recibirMensaje(char* buffer, size_t length);
 
     //Se liberan los recursos del socket. Si se tiene un fd válido, se hace un shutdown y un close
@@ -47,7 +48,7 @@ public:
     ~Socket();
 
 private:
-    //Crea un socket con fd inicial es un fd inválido.
+    //Crea un socket con fd inicial no válido.
     Socket();
 
     //Inicializa el socket gracias a los parámetros host y servicio, y lo conecta al socket servidor
@@ -70,8 +71,12 @@ private:
     char* mensaje_de_error;
 
 public:
+    //Se crea un error, almacenando como mensaje_de_error lo que hay en errno.
     explicit NoSePuedeAceptarSocketError() noexcept;
+
+    //Se devuelve un puntero a buffer que tiene el error guardado al ser lanzado el error.
     virtual const char* what()  const noexcept;
+
     ~NoSePuedeAceptarSocketError() = default;
 };
 
@@ -80,8 +85,12 @@ private:
     const char* mensaje_de_error;
 
 public:
+    //Se crea dicho error recibiendo el mensaje de error por parámetro.
     explicit SocketNoInicializadoError(const char* mensaje_de_error) noexcept;
+
+    //Se retorna un puntero a un buffer con el error.
     virtual const char* what()  const noexcept;
+
     ~SocketNoInicializadoError() = default;
 };
 

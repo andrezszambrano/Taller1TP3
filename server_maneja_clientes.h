@@ -23,13 +23,15 @@ public:
     //Se crea un nuevo maneja cliente, dejando el otro en un estado inválido.
     ManejaCliente(ManejaCliente&& otro_cliente);
 
-    //Se crea un nuevo hilo de trabajo a través de la función pública ejecutarAgarraExcepciones.
+    //Se crea un nuevo hilo de trabajo convocando un nuevo thread con la función pública
+    //ejecutarAgarraExcepciones().
     void empezar();
 
     //Se ejecuta la función, agarrando las excepciones si es que las hay.
     void ejecutarAgarraExcepciones();
 
-    //Se joinea el hilo del maneja cliente con el hilo convocante.
+    //Se joinea el hilo del maneja cliente con el hilo convocante. Si no se había convocado ningún
+    //hilo, no se joinea.
     void join();
 
     //Se liberan los recursos acorde.

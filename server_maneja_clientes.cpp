@@ -44,7 +44,8 @@ void ManejaCliente::ejecutar() {
 }
 
 void ManejaCliente::join() {
-    this->hilo.join();
+    if (this->hilo.joinable())
+        this->hilo.join();
 }
 
 void ManejaCliente::enviarMensajeDeCola(const std::string& nombre_cola) {

@@ -8,8 +8,12 @@ private:
     const char* mensaje_de_error;
 
 public:
+    //Se crea dicho error recibiendo el mensaje de error por parámetro.
     explicit MensajesNoSigueFormatoDeProtocoloError(const char* mensaje_de_error) noexcept;
+
+    //Se retorna un puntero a un buffer con el error.
     virtual const char* what()  const noexcept;
+
     ~MensajesNoSigueFormatoDeProtocoloError() = default;
 };
 
