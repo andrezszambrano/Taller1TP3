@@ -30,28 +30,31 @@ void ManejaCliente::ejecutar() {
     int aux = EXITO;
     while (aux != SOCKET_NO_DISPONIBLE)
         aux = this->recibirMensajeYRealizarAccion();
-   // std::cout << "Cerraron el socket!" <<std::endl;
 }
 
 void ManejaCliente::join() {
     this->hilo.join();
 }
 
+void ManejaCliente::enviarMensajeDeCola(const std::string& nombre_cola) {
+    std::string str_aux;
+    this->mapa_colas.popDeLaCola(nombre_cola, str_aux);
+    const char* mensaje = str_aux.c_str();
+    this->protocolo.enviarMensaje(this->socket_cliente, mensaje, str_aux.size());
+}
+
+
 int ManejaCliente::recibirMensajeYRealizarAccion() {
     MensajeProtocolo info;
     int leidos = this->protocolo.recibirMensaje(this->socket_cliente, info);
     if (leidos == 0) //Cerraron el socket
         return SOCKET_NO_DISPONIBLE;
-    if (info.accion == 'd') {
+    if (info.accion == 'd')
         this->mapa_colas.definir(info.nombre_cola);
-    } else if (info.accion == 'u') {
+    else if (info.accion == 'u')
         this->mapa_colas.pushearEnCola(info.nombre_cola, std::move(info.mensaje_adicional));
-    } else if (info.accion == 'o') {
-        std::string str_aux;
-        this->mapa_colas.popDeLaCola(info.nombre_cola, str_aux);
-        const char* mensaje = str_aux.c_str();
-        this->protocolo.enviarMensaje(this->socket_cliente, mensaje, str_aux.size());
-    }
+    else if (info.accion == 'o')
+        this->enviarMensajeDeCola(info.nombre_cola);
     return EXITO;
 }
 

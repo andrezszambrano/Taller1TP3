@@ -43,6 +43,9 @@ private:
     //Recibe mensaje a través del socket y realiza la acción correspondiente, alterando el mapa de
     //colas.
     int recibirMensajeYRealizarAccion();
+
+    //Se envía el pop de la cola con identificador nombre_cola a través del socket cliente.
+    void enviarMensajeDeCola(const std::string& nombre_cola);
 };
 
 
