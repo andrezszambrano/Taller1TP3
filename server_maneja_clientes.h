@@ -5,6 +5,7 @@
 #include "server_colas_thread_safe.h"
 #include "common_socket.h"
 #include <thread>
+#include <string>
 
 class ManejaCliente {
 private:

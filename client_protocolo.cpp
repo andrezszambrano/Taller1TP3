@@ -16,8 +16,8 @@ void ProtocoloCliente::checkTokensOLanzarError(const std::array<std::string, MAX
     if ((tokens[0] != "define") && (tokens[0] != "push") && (tokens[0] != "pop"))
         throw MensajesNoSigueFormatoDeProtocoloError("La acción dada no corresponde a "
                                                      "ninguna de las acciones disponibles del "
-                                                     "protocolo. Las acciones posibles son: 'define'"
-                                                     ", 'push' o 'pop'");
+                                                     "protocolo. Las acciones posibles son:"
+                                                     " 'define', 'push' o 'pop'");
 }
 
 void agregarLetraDeInstruccion(char* mensaje, const std::map<std::string, char>& map,

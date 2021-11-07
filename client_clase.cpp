@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <cstring>
+#include <utility>
 
 #define MAX_MENSAJE 50
 #define MAX_PALABRAS 3

@@ -72,7 +72,7 @@ private:
 
 public:
     //Se crea un error, almacenando como mensaje_de_error lo que hay en errno.
-    explicit NoSePuedeAceptarSocketError() noexcept;
+    NoSePuedeAceptarSocketError() noexcept;
 
     //Se devuelve un puntero a buffer que tiene el error guardado al ser lanzado el error.
     virtual const char* what()  const noexcept;

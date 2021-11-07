@@ -141,10 +141,6 @@ void Socket::inicializarServidorConBindYListen(const char* host, const char* ser
     this->fd = fdServidor;
 }
 
-bool Socket::esValido() {
-    return (this->fd != SIN_FD);
-}
-
 Socket Socket::aceptarSocket() {
     int fd = accept(this->fd, nullptr, nullptr);
     if (fd == ERROR)
