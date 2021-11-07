@@ -6,8 +6,6 @@
 #include <unistd.h>
 #include <exception>
 
-#define MAX_MENSAJE_DE_ERROR 250
-
 class Socket {
 private:
     int fd;
@@ -69,7 +67,7 @@ private:
 
 class NoSePuedeAceptarSocketError: public std::exception {
 private:
-    char mensaje_de_error[MAX_MENSAJE_DE_ERROR];
+    char* mensaje_de_error;
 
 public:
     explicit NoSePuedeAceptarSocketError() noexcept;

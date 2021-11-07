@@ -17,6 +17,7 @@
 #define MAX_MENSAJE 50
 #define MAX_MENSAJE_DE_ERROR 250
 
+
 Socket::Socket()
         :fd(SIN_FD) {
 }
@@ -205,7 +206,8 @@ Socket::~Socket() {
 
 
 NoSePuedeAceptarSocketError::NoSePuedeAceptarSocketError() noexcept {
-    strerror_r(errno, this->mensaje_de_error, MAX_MENSAJE_DE_ERROR);
+    char str_aux[MAX_MENSAJE_DE_ERROR];
+    this->mensaje_de_error = strerror_r(errno, str_aux, MAX_MENSAJE_DE_ERROR);
 }
 
 const char* NoSePuedeAceptarSocketError::what() const noexcept {
