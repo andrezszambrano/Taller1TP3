@@ -13,7 +13,8 @@ private:
     bool esperando_mensaje;
 
 public:
-    Cliente();
+    Cliente() = delete;
+
     Cliente(const char* host, const char* servidor);
     void ejecutar();
     ~Cliente();

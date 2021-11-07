@@ -10,10 +10,9 @@ private:
     int fd;
 
 public:
-    Socket();
     Socket(Socket&& otro_socket);
-    void inicializarYConectarCliente(const char* host, const char* servicio);
-    void inicializarServidorConBindYListen(const char* host, const char* servicio);
+    static Socket crearSocketClienteYConectarlo(const char* host, const char* servicio);
+    static Socket crearSocketServidorConBindYListen(const char* host, const char* servicio);
     Socket aceptarSocket();
     bool esValido();
     void dejarDeAceptar();
@@ -22,6 +21,9 @@ public:
     ~Socket();
 
 private:
+    Socket();
+    void inicializarYConectarCliente(const char* host, const char* servicio);
+    void inicializarServidorConBindYListen(const char* host, const char* servicio);
     explicit Socket(int fd_valido);
     void shutdownYCerrar();
 };

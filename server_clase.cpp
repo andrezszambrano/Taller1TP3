@@ -11,8 +11,9 @@
 #define DEJAR_DE_ACEPTAR 1
 #define MAX_CLIENTES_CERO_HILOS 10
 Servidor::Servidor(const char* servicio)
-        :socket_aceptador(), protocolo(), mapa_colas() {
-    socket_aceptador.inicializarServidorConBindYListen(nullptr, servicio);
+        :socket_aceptador(std::move(Socket::crearSocketServidorConBindYListen(nullptr,
+                                                                              servicio))),
+         protocolo(), mapa_colas() {
 }
 
 void joinearHilosClientes(std::list<ManejaCliente>& hilos_clientes) {

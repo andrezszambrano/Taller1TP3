@@ -1,7 +1,6 @@
 #ifndef TP3FINAL_SERVER_PROTOCOLO_H
 #define TP3FINAL_SERVER_PROTOCOLO_H
 
-#include "client_intermediario.h"
 #include <string>
 #include "common_socket.h"
 class MensajeProtocolo {

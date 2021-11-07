@@ -1,7 +1,6 @@
 #ifndef TP3FINAL_SERVER_CLASE_H
 #define TP3FINAL_SERVER_CLASE_H
 
-#include "client_intermediario.h"
 #include "server_protocolo.h"
 #include "server_colas_thread_safe.h"
 #include "common_socket.h"

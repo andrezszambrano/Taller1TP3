@@ -29,6 +29,18 @@ Socket::Socket(Socket&& otro_socket) {
     otro_socket.fd = SIN_FD;
 }
 
+Socket Socket::crearSocketClienteYConectarlo(const char* host, const char* servicio) {
+    Socket socket_cliente;
+    socket_cliente.inicializarYConectarCliente(host, servicio);
+    return socket_cliente;
+}
+
+Socket Socket::crearSocketServidorConBindYListen(const char* host, const char* servicio) {
+    Socket socket_servidor;
+    socket_servidor.inicializarServidorConBindYListen(host, servicio);
+    return socket_servidor;
+}
+
 void Socket::inicializarYConectarCliente(const char* host, const char* servicio) {
     struct addrinfo baseaddr;
     struct addrinfo* ptraddr;

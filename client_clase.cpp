@@ -3,18 +3,14 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "client_intermediario.h"
 #include <cstring>
 
 #define MAX_MENSAJE 50
 #define MAX_PALABRAS 3
 
-Cliente::Cliente() {
-}
-
 Cliente::Cliente(const char* host, const char* servidor)
-        :socket_cliente(), protocolo(), cliente_activo(true), esperando_mensaje(false) {
-    socket_cliente.inicializarYConectarCliente(host, servidor);
+        :socket_cliente(std::move(Socket::crearSocketClienteYConectarlo(host, servidor))),
+         protocolo(), cliente_activo(true), esperando_mensaje(false) {
 }
 
 void cargarTokensDeEntradaEstandar(std::array<std::string, MAX_PALABRAS>& tokens) {

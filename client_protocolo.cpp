@@ -77,8 +77,6 @@ void ProtocoloCliente::recibirMensaje(Socket& socket, std::string& palabra) {
     memset(mensaje_aux, 0, MAX_MENSAJE*sizeof(char));
     recibirLargoDePalabraYPalabra(socket, mensaje_aux, leidos);
     palabra = mensaje_aux;
-  //  mensaje.resize(largo + 1);
-    //mensaje.assign(mensaje_aux, largo);
 }
 
 ProtocoloCliente::~ProtocoloCliente() {
