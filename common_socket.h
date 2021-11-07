@@ -4,6 +4,9 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <unistd.h>
+#include <exception>
+
+#define MAX_MENSAJE_DE_ERROR 250
 
 class Socket {
 private:
@@ -64,7 +67,15 @@ private:
     void shutdownYCerrar();
 };
 
+class NoSePuedeAceptarSocketError: public std::exception {
+private:
+    char mensaje_de_error[MAX_MENSAJE_DE_ERROR];
 
+public:
+    explicit NoSePuedeAceptarSocketError() noexcept;
+    virtual const char* what()  const noexcept;
+    ~NoSePuedeAceptarSocketError() = default;
+};
 
 
 #endif //TP3FINAL_CLIENT_SOCKET_H

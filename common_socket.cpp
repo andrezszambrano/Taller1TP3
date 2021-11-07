@@ -15,6 +15,7 @@
 #define SOCKET_NO_DISPONIBLE 0
 #define SIN_FD -1
 #define MAX_MENSAJE 50
+#define MAX_MENSAJE_DE_ERROR 250
 
 Socket::Socket()
         :fd(SIN_FD) {
@@ -145,11 +146,8 @@ bool Socket::esValido() {
 
 Socket Socket::aceptarSocket() {
     int fd = accept(this->fd, nullptr, nullptr);
-    if (fd == ERROR){
-        //fprintf(stderr, "Error: %s\n", strerror(errno));
-        Socket socket_cliente;
-        return socket_cliente;
-    }
+    if (fd == ERROR)
+        throw NoSePuedeAceptarSocketError();
     Socket socket_cliente(fd);
     return socket_cliente;
 }
@@ -203,4 +201,13 @@ void Socket::dejarDeAceptar() {
 Socket::~Socket() {
     if (this->fd != SIN_FD)
         this->shutdownYCerrar();
+}
+
+
+NoSePuedeAceptarSocketError::NoSePuedeAceptarSocketError() noexcept {
+    strerror_r(errno, this->mensaje_de_error, MAX_MENSAJE_DE_ERROR);
+}
+
+const char* NoSePuedeAceptarSocketError::what() const noexcept {
+    return this->mensaje_de_error;
 }

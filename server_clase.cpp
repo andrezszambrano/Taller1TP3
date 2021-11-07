@@ -26,8 +26,6 @@ void joinearHilosClientes(std::list<ManejaCliente>& hilos_clientes) {
 
 int Servidor::agregarClienteALista(std::list<ManejaCliente>& hilos_clientes) {
     Socket socket_cliente = this->socket_aceptador.aceptarSocket();
-    if (!socket_cliente.esValido())
-        return ERROR;
     ManejaCliente cliente(std::move(socket_cliente), this->protocolo, this->mapa_colas);
     hilos_clientes.push_back(std::move(cliente));
     return EXITO;
@@ -45,13 +43,14 @@ void Servidor::ejecutarHiloAceptador() {
     std::list<ManejaCliente> hilos_clientes;
     std::list<ManejaCliente>::iterator it = hilos_clientes.begin(); //Lista vacía al principio
     while (true) {
-        int aux = this->agregarClienteALista(hilos_clientes);
-        if (aux == ERROR) {
+        try {
+            this->agregarClienteALista(hilos_clientes);
+        } catch (const NoSePuedeAceptarSocketError& error) {
             joinearHilosClientes(hilos_clientes);
             return;
         }
         ++it; //Pasamos a apuntar al nuevo elemento
-        it->empezar();
+        it->empezar(); //Empezamos la ejecución
     }
 }
 
