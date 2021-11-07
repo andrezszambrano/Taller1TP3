@@ -29,6 +29,9 @@ void ManejaCliente::ejecutarAgarraExcepciones() {
     } catch (const MensajesNoSigueFormatoDeProtocoloError& error) {
         std::cerr << error.what() << std::endl;
         return;
+    } catch (const SocketNoInicializadoError& error) {
+        std::cerr << error.what() << std::endl;
+        return;
     } catch (...) {
         return;
     }

@@ -35,7 +35,7 @@ void Servidor::ejecutarSoloHiloMain() {
     for (int i = 0; i < MAX_CLIENTES_CERO_HILOS; i++) {
         Socket socket_cliente = this->socket_aceptador.aceptarSocket();
         ManejaCliente cliente(std::move(socket_cliente), this->protocolo, this->mapa_colas);
-        cliente.ejecutar();
+        cliente.ejecutarAgarraExcepciones();
     }
 }
 

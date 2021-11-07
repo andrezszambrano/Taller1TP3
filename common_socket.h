@@ -75,5 +75,14 @@ public:
     ~NoSePuedeAceptarSocketError() = default;
 };
 
+class SocketNoInicializadoError: public std::exception {
+private:
+    const char* mensaje_de_error;
+
+public:
+    explicit SocketNoInicializadoError(const char* mensaje_de_error) noexcept;
+    virtual const char* what()  const noexcept;
+    ~SocketNoInicializadoError() = default;
+};
 
 #endif //TP3FINAL_CLIENT_SOCKET_H

@@ -23,12 +23,11 @@ public:
     //Se crea un nuevo maneja cliente, dejando el otro en un estado inválido.
     ManejaCliente(ManejaCliente&& otro_cliente);
 
-    //Se crea un nuevo hilo de trabajo.
+    //Se crea un nuevo hilo de trabajo a través de la función pública ejecutarAgarraExcepciones.
     void empezar();
 
-    //Se ejecuta la comunicación entre el maneja cliente y su respectivo cliente, hasta que se
-    //detecte que el socket cliente se desconectó.
-    void ejecutar();
+    //Se ejecuta la función, agarrando las excepciones si es que las hay.
+    void ejecutarAgarraExcepciones();
 
     //Se joinea el hilo del maneja cliente con el hilo convocante.
     void join();
@@ -37,8 +36,9 @@ public:
     ~ManejaCliente();
 
 private:
-    //Se ejecuta la función, agarrando las excepciones si es que las hay.
-    void ejecutarAgarraExcepciones();
+    //Se ejecuta la comunicación entre el maneja cliente y su respectivo cliente, hasta que se
+    //detecte que el socket cliente se desconectó.
+    void ejecutar();
 
     //Recibe mensaje a través del socket y realiza la acción correspondiente, alterando el mapa de
     //colas.
