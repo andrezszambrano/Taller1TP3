@@ -1,9 +1,18 @@
 #include "server_protocolo.h"
 #include <cstring>
 #include <arpa/inet.h>
-
+#include "common_excepciones_de_protocolo.h"
 #define MAX_MENSAJE 50
 #define CERO_BYTES 0
+
+void ProtocoloServidor::validarMensajesOLanzarError(const MensajeProtocolo& info) {
+    if ((info.accion != 'd') && (info.accion != 'u') && (info.accion != 'o'))
+        throw MensajesNoSigueFormatoDeProtocoloError("Error: mensaje recibido por cliente no es "
+                                                     "válido. La primera letra tiene que ser 'd' "
+                                                     "para definir una cola, 'u' para pushear en "
+                                                     "una cola, o 'o' para popear de una cola");
+}
+
 
 void recibirCaracterYCargarAccion(Socket& socket, MensajeProtocolo& info, int& leidos) {
     char accion;
@@ -53,6 +62,7 @@ int ProtocoloServidor::recibirMensaje(Socket& socket, MensajeProtocolo& info) {
     recibirYAgregarIdentificador(socket, info, leidos);
     if (info.accion == 'u')
         recibirYAgregarMensajeAdicional(socket, info, leidos);
+    ProtocoloServidor::validarMensajesOLanzarError(info);
     return leidos;
 }
 

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "client_clase.h"
-#include "client_protocolo.h"
+#include "common_excepciones_de_protocolo.h"
 
 #define EXITO 0
 #define PARAMETROS_INCORRECTOS 1

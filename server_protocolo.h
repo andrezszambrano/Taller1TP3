@@ -29,7 +29,10 @@ public:
     void enviarMensaje(Socket& socket, const char* mensaje, int length);
 
     ~ProtocoloServidor() = default;
-};
 
+private:
+    void validarMensajesOLanzarError(const MensajeProtocolo& info);
+
+};
 
 #endif //TP3FINAL_SERVER_PROTOCOLO_H

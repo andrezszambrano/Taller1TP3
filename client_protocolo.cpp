@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <arpa/inet.h>
 #include <cstring>
+#include "common_excepciones_de_protocolo.h"
 
 #define MAX_MENSAJE 50
 
@@ -90,14 +91,4 @@ void ProtocoloCliente::recibirMensaje(Socket& socket, std::string& palabra) {
 }
 
 ProtocoloCliente::~ProtocoloCliente() {
-}
-
-
-MensajesNoSigueFormatoDeProtocoloError::MensajesNoSigueFormatoDeProtocoloError(
-                                                            const char* mensaje_de_error) noexcept
-                                       :mensaje_de_error(mensaje_de_error) {
-}
-
-const char* MensajesNoSigueFormatoDeProtocoloError::what() const noexcept {
-    return this->mensaje_de_error;
 }

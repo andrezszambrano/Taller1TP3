@@ -2,6 +2,7 @@
 #include <iostream>
 #include <utility>
 #include <string>
+#include "common_excepciones_de_protocolo.h"
 
 #define EXITO 0
 #define SOCKET_NO_DISPONIBLE -1
@@ -23,7 +24,14 @@ void ManejaCliente::empezar() {
 }
 
 void ManejaCliente::ejecutarAgarraExcepciones() {
-    this->ejecutar();
+    try {
+        this->ejecutar();
+    } catch (const MensajesNoSigueFormatoDeProtocoloError& error) {
+        std::cerr << error.what() << std::endl;
+        return;
+    } catch (...) {
+        return;
+    }
 }
 
 void ManejaCliente::ejecutar() {
