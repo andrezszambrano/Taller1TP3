@@ -11,7 +11,7 @@ ManejaCliente::ManejaCliente(Socket&& socket, ProtocoloServidor& protocolo,
               :socket_cliente(std::move(socket)), protocolo(protocolo) , mapa_colas(mapa) {
 }
 
-ManejaCliente::ManejaCliente(ManejaCliente&& otroCliente)
+ManejaCliente::ManejaCliente(ManejaCliente&& otro_cliente)
                 :hilo(std::move(otroCliente.hilo)),
                  socket_cliente(std::move(otroCliente.socket_cliente)),
                  protocolo(otroCliente.protocolo),

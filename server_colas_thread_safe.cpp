@@ -36,7 +36,7 @@ MapaDeColasThreadSafe::~MapaDeColasThreadSafe() {
 ThreadSafeQueue::ThreadSafeQueue() {
 }
 
-ThreadSafeQueue::ThreadSafeQueue(ThreadSafeQueue&& otraCola) {
+ThreadSafeQueue::ThreadSafeQueue(ThreadSafeQueue&& otra_cola) {
 }
 
 void ThreadSafeQueue::push(std::string&& mensaje) {
