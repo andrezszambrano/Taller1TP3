@@ -10,6 +10,15 @@ ProtocoloCliente::ProtocoloCliente()
                 :map({{"define", 'd'}, {"push", 'u'}, {"pop", 'o'},}) {
 }
 
+void ProtocoloCliente::checkTokensOLanzarError(const std::array<std::string, MAX_PALABRAS>&
+                                                tokens) {
+    if ((tokens[0] != "define") && (tokens[0] != "push") && (tokens[0] != "pop"))
+        throw MensajesNoSigueFormatoDeProtocoloError("La acción dada no corresponde a "
+                                                     "ninguna de las acciones disponibles del "
+                                                     "protocolo. Las acciones posibles son: 'define'"
+                                                     ", 'push' o 'pop'");
+}
+
 void agregarLetraDeInstruccion(char* mensaje, const std::map<std::string, char>& map,
                                const std::string& accion, int& escritos) {
     mensaje[0] = map.at(accion);
@@ -43,6 +52,7 @@ void agregarLargoYPalabraExtra(char* mensaje, const std::string& palabra, int& e
 
 void ProtocoloCliente::comunicarMensaje(Socket& socket,
                                         const std::array<std::string, MAX_PALABRAS>& tokens) {
+    ProtocoloCliente::checkTokensOLanzarError(tokens);
     char mensaje[MAX_MENSAJE];
     int escritos = 0;
     agregarLetraLargoPalabraYPalabra(mensaje, this->map, tokens[0], tokens[1], escritos);
@@ -82,3 +92,12 @@ void ProtocoloCliente::recibirMensaje(Socket& socket, std::string& palabra) {
 ProtocoloCliente::~ProtocoloCliente() {
 }
 
+
+MensajesNoSigueFormatoDeProtocoloError::MensajesNoSigueFormatoDeProtocoloError(
+                                                            const char* mensaje_de_error) noexcept
+                                       :mensaje_de_error(mensaje_de_error) {
+}
+
+const char* MensajesNoSigueFormatoDeProtocoloError::what() const noexcept {
+    return this->mensaje_de_error;
+}

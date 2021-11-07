@@ -27,8 +27,20 @@ public:
     void recibirMensaje(Socket& socket, std::string& palabra);
 
     ~ProtocoloCliente();
+
+private:
+    static void checkTokensOLanzarError(const std::array<std::string, MAX_PALABRAS>& tokens);
 };
 
+class MensajesNoSigueFormatoDeProtocoloError: public std::exception {
+private:
+    const char* mensaje_de_error;
+
+public:
+    explicit MensajesNoSigueFormatoDeProtocoloError(const char* mensaje_de_error) noexcept;
+    virtual const char* what()  const noexcept;
+    ~MensajesNoSigueFormatoDeProtocoloError() = default;
+};
 
 
 #endif //TP3FINAL_CLIENT_PROTOCOLO_H
