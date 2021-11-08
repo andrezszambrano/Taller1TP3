@@ -1,4 +1,4 @@
-![logofiuba NUEVO](/home/andrezszambrano/Documents/Facultad de Ingeniería de Buenos Aires/Taller de Programación I/Trabajos Prácticos/TP3Final/Imagenes Informe/logofiuba NUEVO.jpg)
+![logofiuba](ImagenesInforme/logofiuba.png)
 
 # Taller de Programación I #
 
@@ -56,19 +56,19 @@ Se procede entonces a mostrar los diagramas de clase.
 
 Diagrama del cliente:
 
-![diagrama_cliente](Imagenes Informe/diagrama_cliente.png)
+![diagrama_cliente](ImagenesInforme/diagrama_cliente.png)
 
 Diagrama del servidor:
 
-![diagrama_servidor](Imagenes Informe/diagrama_servidor.png)
+![diagrama_servidor](ImagenesInforme/diagrama_servidor.png)
 
 Diagrama de excepciones de la clase Socket:
 
-![diagrama_errores_socket](Imagenes Informe/diagrama_errores_socket.png)
+![diagrama_errores_socket](ImagenesInforme/diagrama_errores_socket.png)
 
 Diagrama de excepciones de las clases de protocolo de comunicación:
 
-![diagrama_errores_protocolo](Imagenes Informe/diagrama_errores_protocolo.png)
+![diagrama_errores_protocolo](ImagenesInforme/diagrama_errores_protocolo.png)
 
 
 
