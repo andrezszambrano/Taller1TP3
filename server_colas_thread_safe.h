@@ -10,7 +10,6 @@
 
 class ThreadSafeQueue {
     std::queue<std::string> cola;
-    std::list<int> ids_clientes;
     std::mutex mutex;
     std::condition_variable condition_variable;
 
