@@ -24,11 +24,10 @@ void joinearHilosClientes(std::list<ManejaCliente>& hilos_clientes) {
     }
 }
 
-int Servidor::agregarClienteALista(std::list<ManejaCliente>& hilos_clientes) {
+void Servidor::agregarClienteALista(std::list<ManejaCliente>& hilos_clientes) {
     Socket socket_cliente = this->socket_aceptador.aceptarSocket();
     ManejaCliente cliente(std::move(socket_cliente), this->protocolo, this->mapa_colas);
     hilos_clientes.push_back(std::move(cliente));
-    return EXITO;
 }
 
 void Servidor::ejecutarSoloHiloMain() {

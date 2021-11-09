@@ -47,8 +47,8 @@ private:
     //socket aceptante lance una excepción.
     void ejecutarHiloAceptador();
 
-    //Agrega al nuevo cliente a la lista. AGREGAR INFO DE EXCEPCIONES
-    int agregarClienteALista(std::list<ManejaCliente>& hilos_clientes);
+    //Agrega al nuevo cliente a la lista. 
+    void agregarClienteALista(std::list<ManejaCliente>& hilos_clientes);
 };
 
 #endif //TP3FINAL_SERVER_CLASE_H
